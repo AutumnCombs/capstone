@@ -17,13 +17,13 @@ html {
   
   
   html {
-    background-color: #00539F;
+    background-color: #49b7ea;
   }
   
   body {
     width: 600px;
     margin: 0 auto;
-    background-color: #FF9500;
+    background-color: #ea9c64;
     padding: 0 20px 20px 20px;
     border: 5px solid black;
   }
@@ -31,7 +31,7 @@ html {
   h1 {
     margin: 0;
     padding: 20px 0;	
-    color: #00539F;
+    color: #42009f;
     text-shadow: 3px 3px 1px black;
   }
   
