@@ -8,14 +8,31 @@ pipeline {
                 sh 'git clone https://github.com/AutumnCombs/capstone.git'
             }
         }
-        stage('push repo to remote host') {
+        stage('Test - HTML Lint') {
             steps {
-                echo 'connect to remote host and pull down the latest version'
+                echo 'Running HTMLhint for linting'
+                sh 'htmlhint ./'
+            }
+        }
+        stage('Test - Secrets Scan') {
+            steps {
+                echo 'Running trufflehog for secrets scanning'
+                sh 'pip install --quiet trufflehog'
+                sh 'trufflehog filesystem . || echo "Possible secrets found!"'
             }
         }
         stage('Check website is up') {
             steps {
                 echo 'Check website is up'
+                sh '''
+                    STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://autumncombs.github.io/capstone/)
+                    if [ "$STATUS" -eq 200 ]; then
+                        echo "Website is UP (Status: $STATUS)"
+                    else
+                        echo "Website might be DOWN (Status: $STATUS)"
+                    exit 1
+                    fi
+                '''
             }
         }
     }
