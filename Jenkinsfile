@@ -42,7 +42,7 @@ spec:
       steps {
         container('docker') {
           sh '''
-            docker run -t owasp/zap2docker-stable zap-baseline.py \
+            docker run -t owasp/zap2docker-weekly zap-baseline.py \
               -t https://autumncombs.github.io/capstone/ \
               -r zap_report.html || true
           '''
