@@ -19,6 +19,17 @@ spec:
           mountPath: /var/run/docker.sock
         - name: workspace-volume
           mountPath: /home/jenkins/agent
+    - name: zap
+      image: owasp/zap2docker-weekly
+      command:
+        - sh
+        - -c
+        - |
+          cat
+      tty: true
+      volumeMounts:
+        - name: workspace-volume
+          mountPath: /home/jenkins/agent
   volumes:
     - name: docker-sock
       hostPath:
@@ -40,9 +51,9 @@ spec:
     }
     stage('OWASP ZAP Scan') {
       steps {
-        container('docker') {
+        container('zap') {
           sh '''
-            docker run -t owasp/zap2docker-weekly zap-baseline.py \
+            zap-baseline.py \
               -t https://autumncombs.github.io/capstone/ \
               -r zap_report.html || true
           '''
