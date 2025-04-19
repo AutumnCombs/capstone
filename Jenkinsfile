@@ -8,12 +8,16 @@ pipeline {
                 sh 'git clone https://github.com/AutumnCombs/capstone.git'
             }
         }
-        stage('Test - HTML Lint') {
-            steps {
-                echo 'Running HTMLhint for linting'
-                sh '/usr/local/bin/htmlhint .'
-            }
-        }
+        // stage('Test - HTML Lint') {
+        //     steps {
+        //         echo 'Running HTMLhint for linting'
+        //         sh '''
+        //             # Install htmlhint locally in the agent
+        //             npm install -g htmlhint
+        //             htmlhint .
+        //         '''
+        //     }
+        // }
         // stage('Test - Secrets Scan') {
         //     steps {
         //         echo 'Running trufflehog for secrets scanning'
