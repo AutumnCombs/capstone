@@ -20,7 +20,7 @@ spec:
         - name: workspace-volume
           mountPath: /home/jenkins/agent
     - name: zap
-      image: owasp/zap2docker-weekly
+      image: owasp/zap2docker-live
       command:
         - sh
         - -c
