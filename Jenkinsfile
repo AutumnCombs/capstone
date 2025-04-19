@@ -7,17 +7,24 @@ kind: Pod
 spec:
   containers:
     - name: docker
-      image: docker:20.10.24
+      image: docker:20.10.24-dind
       command:
-        - cat
+        - sh
+        - -c
+        - |
+          apk add --no-cache git curl && cat
       tty: true
       volumeMounts:
         - name: docker-sock
           mountPath: /var/run/docker.sock
+        - name: workspace-volume
+          mountPath: /home/jenkins/agent
   volumes:
     - name: docker-sock
       hostPath:
         path: /var/run/docker.sock
+    - name: workspace-volume
+      emptyDir: {}
 """
     }
   }
