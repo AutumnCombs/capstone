@@ -26,7 +26,7 @@ pipeline {
             steps {
                 sh '''
                 # Update apt repository and install unzip
-                apt-get update && apt-get install -y unzip
+                sudo apt-get update && apt-get install -y unzip
                 '''
             }
         }
