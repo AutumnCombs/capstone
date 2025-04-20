@@ -2,16 +2,16 @@ pipeline {
   agent {
     kubernetes {
       yaml """
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-  - name: zap
-    image: owasp/zap2docker-stable
-    command:
-    - cat
-    tty: true
-"""
+        apiVersion: v1
+        kind: Pod
+        spec:
+          containers:
+          - name: zap
+            image: owasp/zap2docker-stable
+            command:
+            - cat
+            tty: true
+      """
     }
   }
   stages {
