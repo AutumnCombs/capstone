@@ -22,5 +22,23 @@ pipeline {
                 '''
             }
         }
+        stage('Scan for XSS with Nuclei') {
+            steps {
+                sh '''
+                # Step 1: Download and install Nuclei in this pod
+                curl -s https://api.github.com/repos/projectdiscovery/nuclei/releases/latest \
+                | grep "browser_download_url.*linux_amd64.zip" \
+                | cut -d '"' -f 4 \
+                | wget -i -
+
+                unzip nuclei*.zip
+                chmod +x nuclei
+                mv nuclei /usr/local/bin/
+
+                # Step 2: Run Nuclei to scan your app
+                nuclei -u https://autumncombs.github.io/capstone/ -t vulnerabilities/xss/ -o nuclei-results.txt
+                '''
+            }
+        }
     }
 }
