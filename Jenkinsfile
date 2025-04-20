@@ -22,6 +22,14 @@ pipeline {
                 '''
             }
         }
+        stage('Install unzip') {
+            steps {
+                sh '''
+                # Update apt repository and install unzip
+                apt-get update && apt-get install -y unzip
+                '''
+            }
+        }
         stage('Scan for XSS with Nuclei') {
             steps {
                 sh '''
