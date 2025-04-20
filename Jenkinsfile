@@ -29,7 +29,7 @@ pipeline {
                 curl -s https://api.github.com/repos/projectdiscovery/nuclei/releases/latest \
                 | grep "browser_download_url.*linux_amd64.zip" \
                 | cut -d '"' -f 4 \
-                | wget -i -
+                | xargs curl -LO
 
                 unzip nuclei*.zip
                 chmod +x nuclei
