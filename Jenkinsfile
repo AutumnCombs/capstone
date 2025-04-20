@@ -22,10 +22,5 @@ pipeline {
                 '''
             }
         }
-        stage('Custom Security Scan') {
-            steps {
-                sh 'python3 security_scan.py' // assuming it's in your repo
-            }
-        }
     }
 }
