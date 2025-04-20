@@ -6,11 +6,11 @@ def scan_file_for_scripts(file_path):
         content = file.read()
 
     patterns = [
-        r'<script.*?>.*?</script>',  # script tags
-        r'on\w+="[^"]+"',            # inline event handlers
-        r'document\.write',          # risky JS method
-        r'eval\(',                   # use of eval()
-        r'javascript:'               # JS URI scheme
+        r'<script.*?>.*?</script>',
+        r'on\w+="[^"]+"',
+        r'document\.write',
+        r'eval\(',
+        r'javascript:'
     ]
 
     for pattern in patterns:
