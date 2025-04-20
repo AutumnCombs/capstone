@@ -1,33 +1,26 @@
 pipeline {
-  agent {
-    kubernetes {
-      yaml """
-        apiVersion: v1
-        kind: Pod
-        spec:
-          containers:
-          - name: zap
-            image: owasp/zap2docker-stable
-            command:
-            - cat
-            tty: true
-      """
-    }
-  }
-  stages {
-    stage('ZAP Scan') {
-      steps {
-        container('zap') {
-          sh '''
-            zap-baseline.py -t https://6445-204-8-53-10.ngrok-free.app -r zap_report.html
-          '''
+    agent any 
+    stages {
+        stage('Clone the repo') {
+            steps {
+                echo 'clone the repo'
+                sh 'rm -fr html'
+                sh 'git clone https://github.com/AutumnCombs/capstone.git'
+            }
         }
-      }
+        stage('Check website is up') {
+            steps {
+                echo 'Check website is up'
+                sh '''
+                    STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://autumncombs.github.io/capstone/)
+                    if [ "$STATUS" -eq 200 ]; then
+                        echo "Website is UP (Status: $STATUS)"
+                    else
+                        echo "Website might be DOWN (Status: $STATUS)"
+                    exit 1
+                    fi
+                '''
+            }
+        }
     }
-  }
-  post {
-    always {
-      archiveArtifacts artifacts: 'zap_report.html', allowEmptyArchive: true
-    }
-  }
 }
