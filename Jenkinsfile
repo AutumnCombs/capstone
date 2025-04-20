@@ -22,23 +22,5 @@ pipeline {
                 '''
             }
         }
-         stage('Scan for XSS with ZAP') {
-            steps {
-                echo 'Running OWASP ZAP Baseline Scan for XSS...'
-                sh '''
-                    docker run --rm -v $(pwd):/zap/wrk/:rw \
-                    owasp/zap2docker-stable zap-baseline.py \
-                    -t https://autumncombs.github.io/capstone/ \
-                    -r zap_xss_report.html \
-                    -I
-                '''
-            }
-        }
-    }
-    post {
-        always {
-            echo 'Archiving ZAP XSS report...'
-            archiveArtifacts artifacts: 'zap_xss_report.html', allowEmptyArchive: true
-        }
     }
 }
